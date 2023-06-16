@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>md文档内容转成html显示</title>
+    <link rel="icon" href="">
+    <link rel="stylesheet" href="./style/base.css">
+    <link rel="stylesheet" href="./style/github.css" id="link">
+    <link rel="stylesheet" href="./highlight/styles/github.min.css">
+    <script src="./highlight/highlight.min.js"></script>
+    <style>
+        html{
+            background: rgb(255, 255, 255);
+            cursor: url(/Alternate.cur);
+        }
+        #content{
+            margin: 0 auto;
+            width: 1200px;
+            overflow: hidden;
+            cursor: url(Alternate.cur)
+        }
+        #content img{
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">等待内容加载......</div>
+    <div style="margin-top: 30px">
+        <form name="form" action="" method="post">
+            <select name="q">
+                <option value="gs.md">公式</option>
+                <option value="test.md">第一个Markdown文档</option>
+                <option value="javascript基础.md">javascript基础</option>
+            </select>
+            <input type="button" value="显示" onclick="showMarkdown()">
+        </form>
+    </div>
+    <select name="t" id="">
+        <option value="./style/github.css">github</option>
+        <option value="./style/newsprint.css">newsprint</option>
+        <option value="./style/night.css">night</option>
+        <option value="./style/pixyll.css">pixyll</option>
+        <option value="./style/whitey.css">whitey</option>
+    </select>
+    <script type="text/javascript" src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        function showMarkdown() {
+          var f = form;
+          var xmlhttp;
+          if (window.XMLHttpRequest) {
+              xmlhttp = new XMLHttpRequest();
+          } else {
+              xmlhttp = new ActiveXObject('Microsoft.XMLHttp');
+          }
+
+          xmlhttp.onreadystatechange = function() {
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                  document.getElementById('content').innerHTML = marked.parse(xmlhttp.responseText);
+                  hljs.highlightAll();
+              }
+          }
+
+          // 向服务器发送请求
+          xmlhttp.open('GET', f.q.value, true);
+          xmlhttp.send();
+      }
+
+      function transCSS(url){
+        link.type = 'text/css'
+        link.rel = 'stylesheet'
+        link.href = url
+// 使用方法引入css
+      }
+    </script>
+</body>
+
+</html>
